@@ -1,71 +1,96 @@
-# Exercise 01 — File System & JSON
+# Node.js REST API — Students
 
-## Goal
+This project is a simple REST API built with Node.js and Express.
+It serves student data and demonstrates basic backend concepts like routing, middleware, and API structure.
 
-Read a JSON file, transform its data, and write the result to a Markdown file — all using Node.js built-in modules, no `npm install` needed.
+---
 
-## What you will build
+## Features
 
-A script that reads `students.json` and generates a `student_report.md` file.
+* Get all students
+* Get a student by ID
+* Basic CRUD route structure (GET, POST, PUT, DELETE)
+* CORS enabled for frontend communication
+* Clean architecture using:
 
-## Run it
+  * Routes
+  * Controllers
+  * Services
+
+---
+
+## Technologies Used
+
+* Node.js
+* Express
+* Nodemon
+* CORS
+
+---
+
+##  Project Structure
+
+```
+project/
+├── index.js
+├── students.js
+├── routes/
+│   └── students.js
+├── controllers/
+│   └── studentsController.js
+├── services/
+│   └── studentsService.js
+├── package.json
+```
+
+---
+
+## How to Run
+
+1. Install dependencies:
 
 ```bash
-node index.js
+npm install
 ```
 
-If it works, you should see a success message in the terminal and a new `student_report.md` file appear next to `index.js`.
+2. Start the server:
 
-## Modules you will need
-
-| Module | What it does                            |
-| ------ | --------------------------------------- |
-| `fs`   | Read and write files on your filesystem |
-| `path` | Build file paths that work on any OS    |
-
-Both are built into Node.js — just `require` them, no install needed.
-
-## Key functions
-
-- `fs.readFileSync(filePath, 'utf-8')` — reads a file and returns its contents as a string
-- `fs.writeFileSync(filePath, content, 'utf-8')` — writes a string to a file (creates it if it doesn't exist)
-- `JSON.parse(string)` — converts a JSON string into a JavaScript object
-- `path.join(__dirname, 'filename')` — builds a safe absolute path relative to the current script
-
-## Steps
-
-1. Require the `fs` and `path` modules
-2. Read `students.json` using `fs.readFileSync`
-3. Parse the JSON string into a JavaScript array using `JSON.parse`
-4. Build a Markdown string by looping over the students array
-5. Write the result to `student_report.md` using `fs.writeFileSync`
-
-## Expected output
-
-The generated `student_report.md` should look like this:
-
-```markdown
-# Student Report
-
-Generated on: 20/03/2026
-
-## Summary
-
-Total Students: 3
-
-## Student Details
-
-### Alice Martin
-
-- **Email:** alice.martin@epita.fr
-- **Major:** Computer Science
-- **GPA:** 3.8
-- **ID:** 1
-  ...
+```bash
+npm run dev
 ```
 
-## Hints
+3. Server will run on:
 
-- `__dirname` is a Node.js variable that always points to the folder where your script lives — useful for building reliable file paths
-- `Array.forEach()` lets you loop over each student and append their info to your Markdown string
-- Template literals (backticks) make it easy to embed variables inside strings: `` `Hello ${name}` ``
+```
+http://localhost:3000
+```
+
+---
+
+## API Endpoints
+
+| Method | Endpoint        | Description          |
+| ------ | --------------- | -------------------- |
+| GET    | `/students`     | Get all students     |
+| GET    | `/students/:id` | Get a student by ID  |
+| POST   | `/students`     | Create a new student |
+| PUT    | `/students/:id` | Update a student     |
+| DELETE | `/students/:id` | Delete a student     |
+
+---
+
+## Frontend
+
+The API is connected to a simple frontend using `fetch()` to display student data in the browser.
+
+---
+
+## What I Learned
+
+* How to build a REST API with Express
+* How to use middleware like CORS and JSON parser
+* Difference between routes, controllers, and services
+* How to debug API requests using the browser Network tab
+
+---
+
