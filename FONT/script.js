@@ -1,11 +1,11 @@
 const BACKEND_URL = "http://localhost:3000"
 
 const fetchStudents = async () => {
-	const response = await fetch(`${BACKEND_URL}`)
+	const response = await fetch(`${BACKEND_URL}/students`)
 	if (!response.ok) throw new Error(`Server error: ${response.status}`)
 	const data = await response.json()
-	// support both array responses and { students: [...] } shaped responses
-	return Array.isArray(data) ? data : data.students
+	// data is already an array from backend
+	return data
 }
 
 const getInitials = (name) =>
