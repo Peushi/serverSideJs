@@ -1,7 +1,9 @@
-export const getAllStudents = (students) => {
-    return students
+import Student from "../models/Student.js"
+
+export const getAllStudents = async () => {
+    return await Student.find()
 }
 
-export const getStudentById = (students, id) => {
-    return students.find(s => s.id === id)
+export const getStudentById = async (id) => {
+    return await Student.findById(id)
 }
