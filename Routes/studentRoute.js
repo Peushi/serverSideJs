@@ -1,35 +1,23 @@
 import express from "express"
-import { getStudents, getStudent } from "../Controllers/studentController.js"
+
+import {
+    getStudents,
+    getStudent,
+    createNewStudent,
+    updateExistingStudent,
+    deleteExistingStudent
+} from "../Controllers/studentController.js"
 
 const router = express.Router()
 
-// GET all students
 router.get("/", getStudents)
 
-// GET student by ID
 router.get("/:id", getStudent)
 
-// POST — create a new student
-router.post("/", (req, res) => {
-    res.status(201).json({
-        message: "Student created",
-        data: req.body
-    })
-})
+router.post("/", createNewStudent)
 
-// PUT — update a student by ID
-router.put("/:id", (req, res) => {
-    res.json({
-        message: `Student ${req.params.id} updated`,
-        data: req.body
-    })
-})
+router.put("/:id", updateExistingStudent)
 
-// DELETE — remove a student by ID
-router.delete("/:id", (req, res) => {
-    res.json({
-        message: `Student ${req.params.id} deleted`
-    })
-})
+router.delete("/:id", deleteExistingStudent)
 
 export default router
