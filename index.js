@@ -7,6 +7,8 @@ import mongoose from "mongoose"
 import studentRoutes from "./Routes/studentRoute.js"
 import { logger } from "./Middleware/logger.js"
 
+import authRoutes from "./Routes/authRoute.js"
+
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -23,6 +25,7 @@ try {
 app.use(logger)
 app.use(cors())
 app.use(express.json())
+app.use("/auth", authRoutes)
 
 // Routes
 app.get("/", (req, res) => {

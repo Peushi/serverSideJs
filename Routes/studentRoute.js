@@ -1,4 +1,5 @@
 import express from "express"
+import { protect } from "../Middleware/authMiddleware.js"
 
 import {
     getStudents,
@@ -10,14 +11,15 @@ import {
 
 const router = express.Router()
 
-router.get("/", getStudents)
+// Protected routes
+router.get("/", protect, getStudents)
 
-router.get("/:id", getStudent)
+router.get("/:id", protect, getStudent)
 
-router.post("/", createNewStudent)
+router.post("/", protect, createNewStudent)
 
-router.put("/:id", updateExistingStudent)
+router.put("/:id", protect, updateExistingStudent)
 
-router.delete("/:id", deleteExistingStudent)
+router.delete("/:id", protect, deleteExistingStudent)
 
 export default router
