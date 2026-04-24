@@ -6,6 +6,20 @@ export const register = async (req, res) => {
     try {
         const { name, email, password } = req.body
 
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                error: "All fields are required"
+            })
+        }
+
+        const existingUser = await User.findOne({ email })
+
+        if (existingUser) {
+            return res.status(400).json({
+                error: "Email already exists"
+            })
+        }
+
         // hash password
         const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -17,7 +31,11 @@ export const register = async (req, res) => {
 
         res.status(201).json({
             message: "User registered",
-            user
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
         })
 
     } catch (error) {
