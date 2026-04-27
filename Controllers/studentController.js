@@ -9,9 +9,15 @@ import {
 export const getStudents = async (req, res) => {
     try {
         const students = await getAllStudents()
-        res.json(students)
+        //DTO
+        const toStudentDTO = (student) => ({
+            id: student._id,
+            email: student.email,
+        })
+        const studentsDTO = students.map(toStudentDTO)
+        res.status(200).json(studentsDTO)
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(404).json({ message: error.message })
     }
 }
 
