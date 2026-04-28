@@ -5,19 +5,20 @@ import {
     updateStudent,
     deleteStudent
 } from "../Services/studentsService.js"
+import { toStudentDTO } from "../DTOs/studentDto.js"
 
 export const getStudents = async (req, res) => {
     try {
         const students = await getAllStudents()
-        //DTO
-        const toStudentDTO = (student) => ({
-            id: student._id,
-            email: student.email,
-        })
+
         const studentsDTO = students.map(toStudentDTO)
+
         res.status(200).json(studentsDTO)
+
     } catch (error) {
-        res.status(404).json({ message: error.message })
+        res.status(500).json({
+            message: error.message
+        })
     }
 }
 
@@ -27,13 +28,16 @@ export const getStudent = async (req, res) => {
 
         if (!student) {
             return res.status(404).json({
-                error: "Student not found"
+                message: "Student not found"
             })
         }
 
-        res.json(student)
+        res.status(200).json(toStudentDTO(student))
+
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({
+            message: error.message
+        })
     }
 }
 
