@@ -8,6 +8,7 @@ import { logger } from "./Middleware/logger.js"
 
 import authRoutes from "./Routes/authRoute.js"
 import connectDB from "./config/db.js"
+import courseRoutes from "./Routes/courseRoute.js"
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -19,6 +20,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static("public"))
 app.use("/auth", authRoutes)
+app.use("/courses", courseRoutes)
 
 // Routes
 app.get("/", (req, res) => {
