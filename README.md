@@ -1,96 +1,274 @@
-# Node.js REST API — Students
+````markdown
+# Student Management API
 
-This project is a simple REST API built with Node.js and Express.
-It serves student data and demonstrates basic backend concepts like routing, middleware, and API structure.
+A backend Student Management API built with Node.js, Express, MongoDB Atlas, and JWT authentication.
 
----
-
-## Features
-
-* Get all students
-* Get a student by ID
-* Basic CRUD route structure (GET, POST, PUT, DELETE)
-* CORS enabled for frontend communication
-* Clean architecture using:
-
-  * Routes
-  * Controllers
-  * Services
+This project demonstrates backend architecture best practices including:
+- REST API design
+- CRUD operations
+- Authentication & authorization
+- Middleware
+- MongoDB integration
+- File uploads with Multer
+- DTO security patterns
+- Protected routes
 
 ---
 
-## Technologies Used
+# Features
 
-* Node.js
-* Express
-* Nodemon
-* CORS
+## Authentication
+- User registration
+- User login
+- Password hashing with bcrypt
+- JWT token authentication
+- Protected routes
+
+## Students Resource
+- Get all students
+- Get student by ID
+- Create student
+- Update student
+- Delete student
+
+## Courses Resource
+- Get all courses
+- Get course by ID
+- Create course
+- Update course
+- Delete course
+
+## Security & Middleware
+- CORS enabled
+- express.json middleware
+- Logger middleware
+- JWT authentication middleware
+- Validation middleware
+- Environment variables with dotenv
+- DTOs to protect sensitive data
+
+## File Uploads
+- Image upload support using Multer
+- Static file serving with Express
+- Upload validation
 
 ---
 
-##  Project Structure
+# Technologies Used
 
-```
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Mongoose
+- JWT (jsonwebtoken)
+- bcrypt
+- Multer
+- dotenv
+- Nodemon
+- CORS
+
+---
+
+# Project Structure
+
+```text
 project/
+├── config/
+│   └── db.js
+│
+├── Controllers/
+│   ├── authController.js
+│   ├── studentController.js
+│   └── courseController.js
+│
+├── DTOs/
+│   ├── studentDto.js
+│   └── userDto.js
+│
+├── Middleware/
+│   ├── authMiddleware.js
+│   ├── logger.js
+│   ├── multerConfig.js
+│   └── validateStudent.js
+│
+├── models/
+│   ├── Student.js
+│   ├── User.js
+│   └── Course.js
+│
+├── public/
+│   └── uploads/
+│       └── .gitkeep
+│
+├── Routes/
+│   ├── authRoute.js
+│   ├── studentRoute.js
+│   └── courseRoute.js
+│
+├── Services/
+│   ├── studentService.js
+│   └── courseService.js
+│
+├── .env
+├── .env.example
+├── .gitignore
 ├── index.js
-├── students.js
-├── routes/
-│   └── students.js
-├── controllers/
-│   └── studentsController.js
-├── services/
-│   └── studentsService.js
 ├── package.json
+└── package-lock.json
+````
+
+---
+
+# Environment Variables
+
+Create a `.env` file:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+PORT=3000
 ```
 
 ---
 
-## How to Run
+# Installation
 
-1. Install dependencies:
+## 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+```
+
+## 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-2. Start the server:
+## 3. Run the server
 
 ```bash
 npm run dev
 ```
 
-3. Server will run on:
+Server runs on:
 
-```
+```text
 http://localhost:3000
 ```
 
 ---
 
-## API Endpoints
+# Authentication
 
-| Method | Endpoint        | Description          |
-| ------ | --------------- | -------------------- |
-| GET    | `/students`     | Get all students     |
-| GET    | `/students/:id` | Get a student by ID  |
-| POST   | `/students`     | Create a new student |
-| PUT    | `/students/:id` | Update a student     |
-| DELETE | `/students/:id` | Delete a student     |
+Most routes are protected using JWT authentication.
 
----
+After login, include the token in requests:
 
-## Frontend
-
-The API is connected to a simple frontend using `fetch()` to display student data in the browser.
+```http
+Authorization: Bearer YOUR_TOKEN
+```
 
 ---
 
-## What I Learned
+# API Endpoints
 
-* How to build a REST API with Express
-* How to use middleware like CORS and JSON parser
-* Difference between routes, controllers, and services
-* How to debug API requests using the browser Network tab
+## Auth Routes
+
+| Method | Endpoint         | Description   |
+| ------ | ---------------- | ------------- |
+| POST   | `/auth/register` | Register user |
+| POST   | `/auth/login`    | Login user    |
 
 ---
 
+## Student Routes
+
+| Method | Endpoint        | Description       |
+| ------ | --------------- | ----------------- |
+| GET    | `/students`     | Get all students  |
+| GET    | `/students/:id` | Get student by ID |
+| POST   | `/students`     | Create student    |
+| PUT    | `/students/:id` | Update student    |
+| DELETE | `/students/:id` | Delete student    |
+
+---
+
+## Course Routes
+
+| Method | Endpoint       | Description      |
+| ------ | -------------- | ---------------- |
+| GET    | `/courses`     | Get all courses  |
+| GET    | `/courses/:id` | Get course by ID |
+| POST   | `/courses`     | Create course    |
+| PUT    | `/courses/:id` | Update course    |
+| DELETE | `/courses/:id` | Delete course    |
+
+---
+
+# Multer File Uploads
+
+Uploaded images are stored in:
+
+```text
+public/uploads
+```
+
+Static file serving is enabled with:
+
+```js
+app.use(express.static("public"))
+```
+
+---
+
+# DTO Security
+
+DTOs (Data Transfer Objects) are used to prevent exposing sensitive data such as:
+
+* passwords
+* emails
+* private information
+
+Example response:
+
+```json
+[
+  {
+    "id": "123",
+    "name": "Alice",
+    "major": "Computer Science"
+  }
+]
+```
+
+---
+
+# GDPR & Security Practices
+
+* Passwords hashed with bcrypt
+* JWT tokens expire automatically
+* Secrets stored in `.env`
+* Sensitive data hidden using DTOs
+* Protected API routes
+* File upload validation
+* User deletion supported
+
+---
+
+# What I Learned
+
+* Building REST APIs with Express
+* MongoDB & Mongoose integration
+* Authentication with JWT
+* Password hashing with bcrypt
+* Middleware architecture
+* File uploads with Multer
+* DTO security patterns
+* CRUD operations
+* Protected routes
+
+---
+
+```
+```
